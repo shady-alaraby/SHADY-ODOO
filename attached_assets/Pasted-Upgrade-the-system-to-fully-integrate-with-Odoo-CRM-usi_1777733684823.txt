@@ -1,0 +1,194 @@
+Upgrade the system to fully integrate with Odoo CRM using secure environment variables.
+
+---
+
+## 1. Odoo Configuration (IMPORTANT)
+
+Do NOT hardcode credentials in code.
+
+Use environment variables:
+
+ODOO_URL=https://e.aait.sa
+ODOO_DB=REPLACE_WITH_DB_NAME
+ODOO_USERNAME=[Shadyalaraby22@aait.cloud](mailto:Shadyalaraby22@aait.cloud)
+ODOO_PASSWORD=USE_API_KEY_FROM_ENV
+
+Store the API key ONLY in environment variables (Replit Secrets), not in source code.
+
+---
+
+## 2. Security Fix
+
+* Remove any hardcoded credentials from the codebase.
+* Use process.env for all Odoo credentials.
+* Mask sensitive logs (do not print password or API key).
+
+---
+
+## 3. Odoo Connection Service
+
+Update:
+backend/src/services/odooService.js
+
+Implement:
+
+* authenticate()
+* searchReadLeads()
+* getLeadById(odooId)
+* syncAllLeads()
+
+Use XML-RPC:
+
+Endpoints:
+
+* /xmlrpc/2/common
+* /xmlrpc/2/object
+
+---
+
+## 4. Test Authentication
+
+Create a test function:
+
+* Try to authenticate with:
+
+  * DB
+  * username
+  * API key
+
+If authentication fails:
+
+* Log: "Invalid Odoo credentials or DB name"
+
+---
+
+## 5. Fetch crm.lead
+
+Fetch real data from Odoo:
+
+Model: crm.lead
+
+Fields:
+
+* id
+* name
+* contact_name
+* partner_name
+* email_from
+* phone
+* mobile
+* user_id
+* team_id
+* stage_id
+* probability
+* expected_revenue
+* create_date
+* write_date
+
+---
+
+## 6. Map to Local Tickets
+
+For each Odoo lead:
+
+* odooId = id
+* title = name
+* clientName = contact_name or partner_name
+* email = email_from
+* phone = phone or mobile
+* probability = probability
+* expectedRevenue = expected_revenue
+* stage = stage_id display name
+* odooSalespersonName = user_id display name
+
+Upsert into database using odooId.
+
+---
+
+## 7. Build Odoo Link
+
+For each ticket:
+
+odooUrl = https://e.aait.sa/web#id={odooId}&model=crm.lead&view_type=form
+
+Add "Open in Odoo" button in UI.
+
+---
+
+## 8. Sync Endpoint
+
+POST /api/integrations/odoo/sync
+
+Steps:
+
+* authenticate
+* fetch leads
+* upsert tickets
+* map users
+* log results
+
+---
+
+## 9. User Mapping
+
+Match:
+crm.lead.user_id name → local user name
+
+Normalize Arabic names before matching.
+
+If match:
+
+* assign ticket to user
+* link to Team Leader and Business Developer
+
+If not:
+
+* log unmatched user
+
+---
+
+## 10. Database
+
+Ensure Ticket model includes:
+
+* odooId (unique)
+* title
+* clientName
+* email
+* phone
+* stage
+* probability
+* expectedRevenue
+* odooSalespersonName
+* assignedEmployeeId
+* assignedTeamLeaderId
+* assignedBusinessDeveloperId
+* odooUrl
+* lastOdooUpdate
+
+---
+
+## 11. Debugging
+
+If sync fails:
+
+* log full error (without credentials)
+* log response from Odoo
+* log number of records fetched
+
+---
+
+## 12. Final Step
+
+After implementation:
+
+1. Confirm authentication works
+2. Fetch at least 1 lead (example ID: 63651)
+3. Confirm it appears in system
+4. Confirm "Open in Odoo" works
+5. Confirm user mapping works
+
+---
+
+IMPORTANT:
+If ODOO_DB is missing or incorrect, stop and ask user to provide correct database name before proceeding.

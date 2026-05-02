@@ -24,7 +24,7 @@ export const ar = {
   noData: 'لا توجد بيانات',
   overview: 'نظرة عامة على خط المبيعات والأداء.',
 
-  // Tickets
+  // Tickets list
   searchPlaceholder: 'البحث بالعميل، التذكرة، الهاتف...',
   allStages: 'كل المراحل',
   anyRole: 'أي دور',
@@ -40,6 +40,28 @@ export const ar = {
   noTickets: 'لا توجد تذاكر.',
   manageTickets: 'إدارة ومتابعة فرص خط المبيعات.',
   noTicketsInStage: 'لا توجد تذاكر في هذه المرحلة',
+
+  // Ticket detail
+  openInOdoo: 'فتح في Odoo',
+  internalNotes: 'ملاحظات داخلية',
+  addNotes: 'أضف ملاحظات داخلية حول هذه التذكرة...',
+  saveNote: 'حفظ الملاحظة',
+  noteSaved: 'تم حفظ الملاحظة',
+  saving: 'جارٍ الحفظ...',
+  logActivity: 'تسجيل نشاط',
+  activityLogged: 'تم تسجيل النشاط',
+  activityType: 'النوع',
+  activitySummary: 'ملخص أو تفاصيل...',
+  logging: 'جارٍ التسجيل...',
+  note: 'ملاحظة',
+  call: 'مكالمة',
+  meeting: 'اجتماع',
+  timeline: 'الجدول الزمني',
+  noActivities: 'لا توجد أنشطة مسجلة بعد',
+  noDetails: 'لا توجد تفاصيل',
+  addTag: 'أضف وسماً واضغط Enter...',
+  ticketNotFound: 'التذكرة غير موجودة',
+  created: 'تاريخ الإنشاء',
 
   // Users
   addUser: 'إضافة مستخدم',

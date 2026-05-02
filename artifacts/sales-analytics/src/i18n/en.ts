@@ -24,7 +24,7 @@ export const en = {
   noData: 'No data available',
   overview: 'Overview of your pipeline and performance.',
 
-  // Tickets
+  // Tickets list
   searchPlaceholder: 'Search client, ticket, phone...',
   allStages: 'All Stages',
   anyRole: 'Any Role',
@@ -40,6 +40,28 @@ export const en = {
   noTickets: 'No tickets found.',
   manageTickets: 'Manage and track your pipeline opportunities.',
   noTicketsInStage: 'No tickets in this stage',
+
+  // Ticket detail
+  openInOdoo: 'Open in Odoo',
+  internalNotes: 'Internal Notes',
+  addNotes: 'Add internal notes about this ticket...',
+  saveNote: 'Save Note',
+  noteSaved: 'Note saved',
+  saving: 'Saving...',
+  logActivity: 'Log Activity',
+  activityLogged: 'Activity logged',
+  activityType: 'Type',
+  activitySummary: 'Summary or details...',
+  logging: 'Logging...',
+  note: 'Note',
+  call: 'Call',
+  meeting: 'Meeting',
+  timeline: 'Timeline',
+  noActivities: 'No activities logged yet',
+  noDetails: 'No details provided',
+  addTag: 'Add tag and press Enter...',
+  ticketNotFound: 'Ticket not found',
+  created: 'Created',
 
   // Users
   addUser: 'Add User',
