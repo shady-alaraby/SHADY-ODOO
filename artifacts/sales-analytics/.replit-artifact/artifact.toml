@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Sales Analytics"
+version = "1.0.0"
+id = "artifacts/sales-analytics"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24396
+
+[services.development]
+run = "pnpm --filter @workspace/sales-analytics run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/sales-analytics", "run", "build" ]
+publicDir = "artifacts/sales-analytics/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24396"
+BASE_PATH = "/"

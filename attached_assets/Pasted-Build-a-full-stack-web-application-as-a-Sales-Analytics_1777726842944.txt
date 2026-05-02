@@ -1,0 +1,263 @@
+Build a full-stack web application as a "Sales Analytics & Visualization Layer" on top of Odoo CRM.
+
+Tech Stack:
+
+* Backend: Node.js + Express.js
+* Frontend: Nuxt.js 3 + Vue.js 3
+* Database: PostgreSQL (for caching and analytics only, not as source of truth)
+* ORM: Prisma
+* Authentication: JWT
+* Styling: Tailwind CSS
+
+---
+
+### Project Goal:
+
+Create a web platform that connects to Odoo CRM API, fetches leads and deals, and provides advanced visualization, team hierarchy mapping, and performance analytics for a tech services company.
+
+Odoo remains the single source of truth.
+
+---
+
+### 1. Core Concept:
+
+* DO NOT create or manage deals directly in this system.
+* All tickets (leads/deals) are created and updated in Odoo.
+* This system:
+
+  * Fetches data from Odoo
+  * Stores a cached copy
+  * Enhances it with additional metadata (team structure, analytics)
+
+---
+
+### 2. User Roles & Local Mapping:
+
+Create local users:
+
+* Business Developer (BD)
+* Team Leader (TL)
+* Tele Sales (TS)
+
+Important:
+
+* These users are NOT required to exist in Odoo.
+* Create a mapping system:
+
+  * Map Odoo records (salesperson or lead owner) to local users.
+
+Hierarchy:
+
+* BD → TL → TS
+
+Store locally:
+
+* userId
+* role
+* managerId (self-relation)
+
+---
+
+### 3. Ticket Data (Synced from Odoo):
+
+Each ticket (lead/opportunity) should include:
+
+* odooId (external ID)
+* clientName
+* phone
+* email
+* expectedRevenue
+* stage (from Odoo)
+* probability
+* salesperson (from Odoo)
+* lastUpdate
+* createDate
+
+Do NOT overwrite Odoo data unless explicitly needed.
+
+---
+
+### 4. Local Enhancements (Important):
+
+Extend Odoo data locally with:
+
+* Assigned team (BD / TL / TS)
+* Multiple contributors (optional, stored locally only)
+* Tags (services: mobile, ecommerce, etc.)
+* Internal notes (NOT pushed to Odoo)
+* Activity classification (based on Odoo logs if available)
+
+---
+
+### 5. Sync Strategy:
+
+Create a sync service:
+
+* Pull data from Odoo API every X minutes
+* Store/update in local PostgreSQL
+
+Rules:
+
+* Use odooId as unique key
+* Do not duplicate records
+* Log every sync in IntegrationLog table
+
+Optional:
+
+* Add manual "Sync Now" button
+
+---
+
+### 6. Kanban Board (Read-Only or Semi-Controlled):
+
+* Display pipeline stages (from Odoo)
+* Group tickets by stage
+* Drag & drop (OPTIONAL):
+
+  * If enabled → update stage in Odoo via API
+  * Otherwise → read-only mode
+
+---
+
+### 7. Dashboards & Analytics:
+
+Business Developer Dashboard:
+
+* Total pipeline value
+* Closing probability weighted revenue
+* Performance per Team Leader
+* Conversion rates
+
+Team Leader Dashboard:
+
+* Team activity
+* Deals per Tele Sales
+* Follow-ups
+* Stage distribution
+
+Tele Sales Dashboard:
+
+* Assigned deals
+* Pending follow-ups
+* Conversion performance
+
+Metrics:
+
+* Conversion rate per stage
+* Average deal cycle time
+* Revenue per service
+* Activity vs closing correlation
+
+---
+
+### 8. Activity Tracking:
+
+If Odoo provides activity logs:
+
+* Sync them
+
+Otherwise:
+
+* Allow LOCAL activities:
+
+  * call
+  * meeting
+  * WhatsApp
+  * email
+
+Important:
+
+* Mark them as "internal only"
+* Do not sync back to Odoo
+
+---
+
+### 9. Filters & Views:
+
+Provide:
+
+* Kanban view
+* Table view
+* Advanced filters:
+
+  * by user
+  * by team
+  * by stage
+  * by service
+  * by probability
+  * by last activity
+
+---
+
+### 10. UI/UX:
+
+* Modern dashboard
+* RTL support (Arabic)
+* Clean cards & charts
+* Responsive design
+* Dark/light mode
+
+---
+
+### 11. Backend Structure:
+
+backend/
+src/
+server.js
+app.js
+routes/
+controllers/
+services/
+odooService.js
+syncService.js
+middlewares/
+prisma/
+
+---
+
+### 12. Frontend Structure:
+
+frontend/
+pages/
+dashboard.vue
+tickets/index.vue
+tickets/[id].vue
+components/
+KanbanBoard.vue
+TicketCard.vue
+AnalyticsCharts.vue
+FiltersPanel.vue
+
+---
+
+### 13. API Endpoints:
+
+* GET /api/tickets (from cached DB)
+* GET /api/tickets/:id
+* GET /api/dashboard/*
+* POST /api/sync/odoo
+* GET /api/users
+* POST /api/mapping (map Odoo users to local users)
+
+---
+
+### 14. Security:
+
+* JWT authentication
+* Role-based access
+* Read-only restrictions where needed
+
+---
+
+### 15. Deliverables:
+
+* Odoo integration service
+* Sync engine
+* Cached database
+* Dashboard UI
+* Kanban visualization
+
+---
+
+Important:
+Keep the system lightweight, fast, and focused on analytics and visualization, not CRM replacement.
