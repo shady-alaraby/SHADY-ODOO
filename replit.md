@@ -10,12 +10,13 @@ Full-stack pnpm workspace monorepo. React+Vite frontend at `/`, Express API at `
 - **Node.js version**: 24
 - **Package manager**: pnpm
 - **TypeScript version**: 5.9
-- **Frontend**: React + Vite, Recharts, Zustand, next-themes, wouter, shadcn/ui
+- **Frontend**: React + Vite, Recharts, Zustand, next-themes, wouter, shadcn/ui, Cairo/Inter fonts
 - **API framework**: Express 5
 - **Database**: PostgreSQL + Drizzle ORM
 - **Validation**: Zod, drizzle-zod
 - **API codegen**: Orval (from OpenAPI spec — contract-first)
 - **Auth**: JWT (`jsonwebtoken` + `bcryptjs`), email-based login
+- **i18n**: Custom React context, Arabic (RTL default) + English
 
 ## Key Commands
 
@@ -31,31 +32,61 @@ Full-stack pnpm workspace monorepo. React+Vite frontend at `/`, Express API at `
 | `artifacts/sales-analytics` | `/` | React+Vite frontend |
 | `artifacts/api-server` | `/api` | Express REST API |
 
+## Theme
+
+**Dark mode (default):** Black/dark navy background, gold (`hsl(43,74%,49%)`) as primary color, glassmorphism cards, gold glow effects, neon chart colors.
+
+**Light mode:** White/cream background, darker gold, high contrast.
+
+**Font:** Cairo (Arabic + Latin) + Inter as fallback.
+
+## i18n
+
+- Default: Arabic RTL
+- Toggle: Language switcher in sidebar and on login page
+- Files: `artifacts/sales-analytics/src/i18n/ar.ts`, `en.ts`, `index.tsx`
+- Hook: `useI18n()` — provides `{ t, lang, setLang, isRTL }`
+
 ## Auth
 
 - Login: `POST /api/auth/login` with `{ email, password }`
 - JWT payload fields: `userId`, `role`, `username`
 - Frontend reads `user?.userId` (NOT `user?.id`) from parsed JWT
 
-### Demo credentials
+## Team Hierarchy (36 users)
 
-| Email | Password | Role |
+4 Business Developers → 2 Team Leaders each → 2-4 Employees each
+
+**Business Developers:**
+- أشرف عصمت → ashraf@example.com
+- حسام حامد → hussam.hamid@example.com
+- شادي العربي → shadi@example.com
+- مجاهد الأمين → mujahid@example.com
+
+**Admin:** admin@example.com / admin123
+
+**All other users:** password123
+
+## Pages
+
+| Route | Page | Description |
 |---|---|---|
-| admin@example.com | admin123 | ADMIN |
-| ahmed@example.com | password123 | BD |
-| sara@example.com | password123 | TL |
-| khalid@example.com | password123 | TL |
-| layla@example.com | password123 | TS |
-| omar@example.com | password123 | TS |
+| `/` | → `/dashboard` | Redirect |
+| `/dashboard` | Dashboard | Gold KPI cards, animated counters, charts |
+| `/tickets` | Tickets | Table + Kanban board |
+| `/hierarchy` | Team Hierarchy | Expandable org chart tree |
+| `/users` | Users | Card grid with BD/role filters |
+| `/mapping` | Odoo Mapping | Salesperson name mapping |
+| `/sync` | Sync Status | Odoo sync logs |
+| `/settings` | Settings | App settings |
 
 ## Critical Notes
 
 ### Orval codegen quirk
-After every `codegen` run, `lib/api-zod/src/index.ts` gets reset. The `package.json` codegen script now auto-fixes this by overwriting the file immediately after orval runs. The correct content is always:
+After every `codegen` run, `lib/api-zod/src/index.ts` gets reset. The `package.json` codegen script now auto-fixes this by overwriting the file immediately after orval runs. Correct content:
 ```ts
 export * from "./generated/api";
 ```
-The `api.schemas.ts` file exists for `api-client-react` but NOT for `api-zod`.
 
 ### Auth token wiring
 `setAuthTokenGetter(() => localStorage.getItem("token"))` is called at module level in `App.tsx` — this wires JWT bearer auth to all API requests automatically.

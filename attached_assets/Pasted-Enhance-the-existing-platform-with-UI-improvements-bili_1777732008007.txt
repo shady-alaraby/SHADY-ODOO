@@ -1,0 +1,292 @@
+Enhance the existing platform with UI improvements, bilingual support, and full team hierarchy extracted from the uploaded image, then connect users to Odoo data.
+
+---
+
+## 1. UI / UX Design (Premium Theme)
+
+### Dark Mode (Default)
+
+* Background: black / very dark navy
+* Text: gold
+* Use gold accents for:
+
+  * buttons
+  * borders
+  * icons
+  * headings
+* Add vibrant accent colors (neon-like) for:
+
+  * charts
+  * badges
+  * ticket states
+* Use gradients, glow effects, glassmorphism cards
+
+### Light Mode
+
+* White background
+* Gold remains primary brand color
+* Maintain strong contrast
+
+### Animations
+
+Add smooth modern animations:
+
+* Page transitions
+* Card hover (glow + scale)
+* Buttons hover effects
+* Kanban drag animation
+* Sidebar toggle animation
+* Loading skeletons
+* Animated counters in dashboard
+* Toast notifications
+
+---
+
+## 2. Arabic / English Support
+
+* Add full i18n system
+* Arabic (default) → RTL
+* English → LTR
+* Create:
+
+  * locales/ar.json
+  * locales/en.json
+* Translate:
+
+  * dashboard
+  * tickets
+  * filters
+  * buttons
+  * errors
+  * navigation
+
+---
+
+## 3. Team Hierarchy (From Image)
+
+### Business Developers:
+
+* أشرف عصمت
+* حسام حامد
+* شادي العربي
+* مجاهد الأمين
+
+Role: BUSINESS_DEVELOPER
+
+---
+
+### Team Leaders:
+
+أشرف عصمت:
+
+* حسام عز
+* سمر
+
+حسام حامد:
+
+* سارة
+* النجار
+
+شادي العربي:
+
+* السقا
+* هاجر
+
+مجاهد الأمين:
+
+* مصطفى
+* احمد نايل
+
+Role: TEAM_LEADER
+Each must be linked to their Business Developer via managerId
+
+---
+
+### Employees / Tele Sales:
+
+#### أشرف عصمت:
+
+Team Leader: حسام عز
+
+* أشرقت
+* نيرة
+* ميرنا المشاقي
+
+Team Leader: سمر
+
+* تحية
+* فيروز
+* محمد صبري العطار
+* جهاد
+
+---
+
+#### حسام حامد:
+
+Team Leader: سارة
+
+* امنية
+* احمد الديب
+
+Team Leader: النجار
+
+* ندى القناوي
+* ماهر سليم
+* محمد الشربيني
+
+---
+
+#### شادي العربي:
+
+Team Leader: السقا
+
+* فرح
+* مهاب
+* اسلام حسين
+
+Team Leader: هاجر
+
+* شيماء
+* ايه عبد البديع
+
+---
+
+#### مجاهد الأمين:
+
+Team Leader: مصطفى
+
+* سلمى
+* امل
+* عبدالرحمن طلعت
+
+Team Leader: احمد نايل
+
+* عمر رشاد
+* روان
+* حنين السيد
+
+---
+
+## 4. Database & Seed
+
+* Clear existing users
+* Insert all users with:
+
+  * name
+  * email (auto-generate: [name@example.com](mailto:name@example.com))
+  * password: "password123" (hashed with bcrypt)
+  * role
+  * managerId
+
+---
+
+## 5. UI Features for Users
+
+Create:
+
+* Team Hierarchy Tree View (Org Chart)
+* Users Page
+* User Cards (name, role, manager)
+* Filters:
+
+  * by Business Developer
+  * by Team Leader
+
+---
+
+## 6. Odoo Integration Mapping
+
+* Match Odoo salesperson name with local user name
+* Auto-assign tickets based on match
+
+If no match:
+
+* leave unassigned
+* log it in IntegrationLog
+
+---
+
+## 7. Dashboard Updates
+
+* Gold KPI cards
+* Animated numbers
+* Colorful charts
+* Show:
+
+  * performance per Business Developer
+  * performance per Team Leader
+  * performance per Employee
+  * pipeline distribution
+  * closing rate
+
+---
+
+## 8. Kanban Enhancements
+
+* Dark premium board
+* Gold stage headers
+* Colorful ticket cards
+* Show:
+
+  * probability
+  * service type
+  * assigned users
+* Smooth drag & drop animation
+
+---
+
+## 9. Navigation
+
+Add:
+
+* Language switcher (AR / EN)
+* Dark / Light toggle
+* Sidebar:
+
+  * Dashboard
+  * Tickets
+  * Team Hierarchy
+  * Users
+  * Integrations
+  * Settings
+
+---
+
+## 10. Technical Stack
+
+Use:
+
+* Nuxt 3
+* Vue 3
+* Tailwind CSS
+* i18n
+* Smooth CSS animations
+
+---
+
+## 11. Execution Steps
+
+Implement step by step:
+
+1. Theme system (dark/light)
+2. i18n (Arabic/English)
+3. Seed users from hierarchy
+4. Build team hierarchy UI
+5. Connect Odoo mapping
+6. Update dashboard
+7. Enhance Kanban
+8. Final testing
+
+---
+
+## 12. Validation
+
+After implementation:
+
+* Print full hierarchy
+* Confirm:
+
+  * each BD has 2 TL
+  * each TL has correct employees
+* Confirm login works
+* Confirm tickets mapped correctly

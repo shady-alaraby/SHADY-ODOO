@@ -1,0 +1,91 @@
+export const en = {
+  // Navigation
+  dashboard: 'Dashboard',
+  tickets: 'Tickets',
+  users: 'Users',
+  hierarchy: 'Team Hierarchy',
+  mapping: 'Odoo Mapping',
+  sync: 'Sync Status',
+  settings: 'Settings',
+  logout: 'Logout',
+  lightMode: 'Light Mode',
+  darkMode: 'Dark Mode',
+  arabic: 'العربية',
+  english: 'English',
+
+  // Dashboard
+  totalPipeline: 'Total Pipeline',
+  weightedRevenue: 'Weighted Revenue',
+  openTickets: 'Open Tickets',
+  winRate: 'Win Rate',
+  pipelineByStage: 'Pipeline by Stage',
+  stageDistribution: 'Stage Distribution (Count)',
+  teamPerformance: 'Team Performance',
+  noData: 'No data available',
+  overview: 'Overview of your pipeline and performance.',
+
+  // Tickets
+  searchPlaceholder: 'Search client, ticket, phone...',
+  allStages: 'All Stages',
+  anyRole: 'Any Role',
+  table: 'Table',
+  kanban: 'Kanban',
+  clientTicket: 'Client / Ticket',
+  stage: 'Stage',
+  revenue: 'Revenue',
+  probability: 'Probability',
+  salesperson: 'Salesperson',
+  tags: 'Tags',
+  lastUpdated: 'Last Updated',
+  noTickets: 'No tickets found.',
+  manageTickets: 'Manage and track your pipeline opportunities.',
+  noTicketsInStage: 'No tickets in this stage',
+
+  // Users
+  addUser: 'Add User',
+  name: 'Name',
+  username: 'Username',
+  email: 'Email',
+  password: 'Password',
+  role: 'Role',
+  manager: 'Manager',
+  none: 'None',
+  createUser: 'Create User',
+  creating: 'Creating...',
+  manageTeam: 'Manage team members and their roles.',
+  businessDeveloper: 'Business Developer (BD)',
+  teamLeader: 'Team Leader (TL)',
+  technicalSales: 'Technical Sales (TS)',
+  admin: 'Admin',
+
+  // Hierarchy
+  teamHierarchy: 'Team Hierarchy',
+  hierarchyDesc: 'Organizational structure and reporting lines.',
+  businessDevelopers: 'Business Developers',
+  teamLeaders: 'Team Leaders',
+  employees: 'Employees',
+  reportsTo: 'Reports to',
+  members: 'members',
+
+  // Login
+  signIn: 'Sign In',
+  signInTo: 'Sign in to OdooLens',
+  enterCredentials: 'Enter your email and password to continue',
+  emailPlaceholder: 'admin@example.com',
+  enterValidEmail: 'Enter a valid email address',
+  passwordRequired: 'Password is required',
+  authenticating: 'Authenticating...',
+  demoCredentials: 'Demo credentials',
+  loginFailed: 'Login failed',
+  invalidCredentials: 'Invalid credentials',
+  welcomeBack: 'Welcome back',
+  loggedInAs: 'Logged in as',
+
+  // Roles
+  roleADMIN: 'Admin',
+  roleBD: 'Business Dev',
+  roleTL: 'Team Lead',
+  roleTS: 'Tele Sales',
+};
+
+export type TranslationKey = keyof typeof en;
