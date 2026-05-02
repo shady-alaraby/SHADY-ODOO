@@ -12,6 +12,7 @@ router.get("/users", authMiddleware, async (req, res) => {
     const users = await db.select({
       id: usersTable.id,
       username: usersTable.username,
+      email: usersTable.email,
       name: usersTable.name,
       role: usersTable.role,
       managerId: usersTable.managerId,
@@ -30,6 +31,7 @@ router.post("/users", authMiddleware, async (req, res) => {
     const passwordHash = await bcrypt.hash(body.password, 10);
     const [user] = await db.insert(usersTable).values({
       username: body.username,
+      email: body.email,
       passwordHash,
       name: body.name,
       role: body.role,
@@ -37,6 +39,7 @@ router.post("/users", authMiddleware, async (req, res) => {
     }).returning({
       id: usersTable.id,
       username: usersTable.username,
+      email: usersTable.email,
       name: usersTable.name,
       role: usersTable.role,
       managerId: usersTable.managerId,
@@ -55,6 +58,7 @@ router.get("/users/:id", authMiddleware, async (req, res) => {
     const [user] = await db.select({
       id: usersTable.id,
       username: usersTable.username,
+      email: usersTable.email,
       name: usersTable.name,
       role: usersTable.role,
       managerId: usersTable.managerId,

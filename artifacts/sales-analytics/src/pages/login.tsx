@@ -19,7 +19,7 @@ import { toast } from "@/hooks/use-toast";
 import { Activity } from "lucide-react";
 
 const loginSchema = z.object({
-  username: z.string().min(1, "Username is required"),
+  email: z.string().email("Enter a valid email address"),
   password: z.string().min(1, "Password is required"),
 });
 
@@ -31,7 +31,7 @@ export default function Login() {
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
@@ -44,10 +44,10 @@ export default function Login() {
         setLocation("/dashboard");
       },
       onError: (err) => {
-        toast({ 
-          title: "Login failed", 
-          description: err.message || "Invalid credentials", 
-          variant: "destructive" 
+        toast({
+          title: "Login failed",
+          description: err.message || "Invalid credentials",
+          variant: "destructive"
         });
       }
     });
@@ -59,7 +59,7 @@ export default function Login() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[100px]" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-chart-2/10 rounded-full blur-[100px]" />
       </div>
-      
+
       <Card className="w-full max-w-md z-10 border-border bg-card/60 backdrop-blur-xl shadow-2xl">
         <CardHeader className="space-y-3 text-center pb-8">
           <div className="mx-auto w-12 h-12 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
@@ -67,7 +67,7 @@ export default function Login() {
           </div>
           <div>
             <CardTitle className="text-2xl font-bold tracking-tight">Sign in to OdooLens</CardTitle>
-            <CardDescription className="text-muted-foreground mt-1">Enter your details to access your terminal</CardDescription>
+            <CardDescription className="text-muted-foreground mt-1">Enter your email and password to continue</CardDescription>
           </div>
         </CardHeader>
         <CardContent>
@@ -75,12 +75,19 @@ export default function Login() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="username"
+                name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="admin" {...field} data-testid="input-username" className="bg-background" />
+                      <Input
+                        type="email"
+                        placeholder="admin@example.com"
+                        autoComplete="email"
+                        {...field}
+                        data-testid="input-email"
+                        className="bg-background"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -93,15 +100,22 @@ export default function Login() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="••••••••" {...field} data-testid="input-password" className="bg-background" />
+                      <Input
+                        type="password"
+                        placeholder="••••••••"
+                        autoComplete="current-password"
+                        {...field}
+                        data-testid="input-password"
+                        className="bg-background"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button 
-                type="submit" 
-                className="w-full font-medium" 
+              <Button
+                type="submit"
+                className="w-full font-medium"
                 disabled={loginMutation.isPending}
                 data-testid="button-submit-login"
               >
@@ -109,6 +123,12 @@ export default function Login() {
               </Button>
             </form>
           </Form>
+
+          <div className="mt-6 p-4 bg-muted/30 rounded-lg border border-border text-sm text-muted-foreground space-y-1">
+            <p className="font-medium text-foreground">Demo credentials</p>
+            <p><span className="font-mono text-primary">admin@example.com</span> — password: <span className="font-mono">admin123</span></p>
+            <p><span className="font-mono text-primary">ahmed@example.com</span> — password: <span className="font-mono">password123</span></p>
+          </div>
         </CardContent>
       </Card>
     </div>

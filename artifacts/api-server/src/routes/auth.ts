@@ -10,7 +10,7 @@ const router: IRouter = Router();
 router.post("/auth/login", async (req, res) => {
   try {
     const body = LoginBody.parse(req.body);
-    const [user] = await db.select().from(usersTable).where(eq(usersTable.username, body.username)).limit(1);
+    const [user] = await db.select().from(usersTable).where(eq(usersTable.email, body.email)).limit(1);
     if (!user) {
       res.status(401).json({ error: "Invalid credentials" });
       return;
@@ -26,6 +26,7 @@ router.post("/auth/login", async (req, res) => {
       user: {
         id: user.id,
         username: user.username,
+        email: user.email,
         name: user.name,
         role: user.role,
         managerId: user.managerId,
@@ -48,6 +49,7 @@ router.get("/auth/me", authMiddleware, async (req, res) => {
     res.json({
       id: user.id,
       username: user.username,
+      email: user.email,
       name: user.name,
       role: user.role,
       managerId: user.managerId,

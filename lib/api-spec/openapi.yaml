@@ -459,12 +459,13 @@ components:
     LoginBody:
       type: object
       properties:
-        username:
+        email:
           type: string
+          format: email
         password:
           type: string
       required:
-        - username
+        - email
         - password
 
     AuthResponse:
@@ -485,6 +486,9 @@ components:
           type: integer
         username:
           type: string
+        email:
+          type: string
+          format: email
         name:
           type: string
         role:
@@ -499,6 +503,7 @@ components:
       required:
         - id
         - username
+        - email
         - name
         - role
         - createdAt
@@ -508,6 +513,9 @@ components:
       properties:
         username:
           type: string
+        email:
+          type: string
+          format: email
         password:
           type: string
         name:
@@ -520,6 +528,7 @@ components:
           nullable: true
       required:
         - username
+        - email
         - password
         - name
         - role

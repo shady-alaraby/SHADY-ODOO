@@ -10,7 +10,7 @@ export interface HealthStatus {
 }
 
 export interface LoginBody {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -26,6 +26,7 @@ export const UserRole = {
 export interface User {
   id: number;
   username: string;
+  email: string;
   name: string;
   role: UserRole;
   managerId?: number | null;
@@ -49,6 +50,7 @@ export const CreateUserBodyRole = {
 
 export interface CreateUserBody {
   username: string;
+  email: string;
   password: string;
   name: string;
   role: CreateUserBodyRole;

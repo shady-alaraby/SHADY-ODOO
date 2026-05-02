@@ -18,7 +18,7 @@ export const HealthCheckResponse = zod.object({
  * @summary Login with username and password
  */
 export const LoginBody = zod.object({
-  username: zod.string(),
+  email: zod.string().email(),
   password: zod.string(),
 });
 
@@ -27,6 +27,7 @@ export const LoginResponse = zod.object({
   user: zod.object({
     id: zod.number(),
     username: zod.string(),
+    email: zod.string().email(),
     name: zod.string(),
     role: zod.enum(["BD", "TL", "TS", "ADMIN"]),
     managerId: zod.number().nullish(),
@@ -40,6 +41,7 @@ export const LoginResponse = zod.object({
 export const GetMeResponse = zod.object({
   id: zod.number(),
   username: zod.string(),
+  email: zod.string().email(),
   name: zod.string(),
   role: zod.enum(["BD", "TL", "TS", "ADMIN"]),
   managerId: zod.number().nullish(),
@@ -52,6 +54,7 @@ export const GetMeResponse = zod.object({
 export const ListUsersResponseItem = zod.object({
   id: zod.number(),
   username: zod.string(),
+  email: zod.string().email(),
   name: zod.string(),
   role: zod.enum(["BD", "TL", "TS", "ADMIN"]),
   managerId: zod.number().nullish(),
@@ -64,6 +67,7 @@ export const ListUsersResponse = zod.array(ListUsersResponseItem);
  */
 export const CreateUserBody = zod.object({
   username: zod.string(),
+  email: zod.string().email(),
   password: zod.string(),
   name: zod.string(),
   role: zod.enum(["BD", "TL", "TS", "ADMIN"]),
@@ -80,6 +84,7 @@ export const GetUserParams = zod.object({
 export const GetUserResponse = zod.object({
   id: zod.number(),
   username: zod.string(),
+  email: zod.string().email(),
   name: zod.string(),
   role: zod.enum(["BD", "TL", "TS", "ADMIN"]),
   managerId: zod.number().nullish(),
@@ -159,6 +164,7 @@ export const GetTicketResponse = zod
         .object({
           id: zod.number(),
           username: zod.string(),
+          email: zod.string().email(),
           name: zod.string(),
           role: zod.enum(["BD", "TL", "TS", "ADMIN"]),
           managerId: zod.number().nullish(),
@@ -362,6 +368,7 @@ export const ListMappingsResponseItem = zod.object({
     .object({
       id: zod.number(),
       username: zod.string(),
+      email: zod.string().email(),
       name: zod.string(),
       role: zod.enum(["BD", "TL", "TS", "ADMIN"]),
       managerId: zod.number().nullish(),
