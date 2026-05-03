@@ -1,0 +1,25 @@
+#!/bin/sh
+# Auto-sync to GitHub on every commit
+
+if [ -z "$GITHUB_TOKEN" ]; then
+  echo "[post-commit] GITHUB_TOKEN is not set — skipping GitHub sync"
+  exit 0
+fi
+
+REMOTE_URL="https://${GITHUB_TOKEN}@github.com/shady-alaraby/SHADY-ODOO.git"
+
+git config user.email "replit-agent@replit.com" 2>/dev/null || true
+git config user.name "Replit Agent" 2>/dev/null || true
+
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "main")
+
+echo "[post-commit] Pushing branch '${CURRENT_BRANCH}' to GitHub..."
+
+git push "$REMOTE_URL" "${CURRENT_BRANCH}:main" --force 2>&1 | sed "s/${GITHUB_TOKEN}/***REDACTED***/g"
+
+STATUS=$?
+if [ $STATUS -eq 0 ]; then
+  echo "[post-commit] Successfully pushed to GitHub."
+else
+  echo "[post-commit] Push to GitHub failed (exit $STATUS). Check GITHUB_TOKEN and repo permissions."
+fi
