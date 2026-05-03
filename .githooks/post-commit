@@ -24,7 +24,7 @@ echo "[post-commit] Pushing main to GitHub..."
 PUSH_OUTPUT=$(git push "$REMOTE_URL" "main:main" 2>&1) || PUSH_EXIT=$?
 PUSH_EXIT=${PUSH_EXIT:-0}
 
-SAFE_OUTPUT=$(printf '%s' "$PUSH_OUTPUT" | sed "s/${GITHUB_TOKEN}/***REDACTED***/g")
+SAFE_OUTPUT=$(printf '%s' "$PUSH_OUTPUT" | sed 's|https://[^@]*@github\.com|https://***@github.com|g')
 echo "$SAFE_OUTPUT"
 
 if [ "$PUSH_EXIT" -eq 0 ]; then
